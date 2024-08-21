@@ -7,7 +7,7 @@ const port = process.env.PORT || 3000;
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: "http://127.0.0.1:5500",
   },
 });
 
@@ -16,7 +16,9 @@ app.get("/", (_req, res) => {
 });
 
 io.on("connection", (socket) => {
-  console.log("a user connected");
+  socket.on("chat", (message) => {
+    io.emit("chat", message);
+  });
 });
 
 server.listen(port, () => {
