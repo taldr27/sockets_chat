@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat with sockets</title>
+</head>
+<body>
+  <ul id="messages">
+
+  </ul>
+  <form id="chat">
+    <input type="text" id="inputMessage" autocomplete="off">
+    <button type="submit">Send</button>
+  </form>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const API_URL = "http://localhost:3000";
+    const socket = io();
+
+  </script>
+</body>
+</html>
