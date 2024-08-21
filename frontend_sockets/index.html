@@ -6,43 +6,29 @@
     <title>Chat with sockets</title>
   </head>
   <body>
-    <ul id="messagesList"></ul>
-    <form id="chat">
-      <input type="text" id="inputMessage" autocomplete="off" />
-      <button type="submit">Send</button>
-    </form>
+    <div id="rooms">
+      <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" />
+      </div>
+      <div>
+        <button id="generalRoom">General</button>
+        <button id="randomRoom">Random</button>
+      </div>
+    </div>
+
+    <div id="room" style="display: none">
+      <ul id="messagesList"></ul>
+      <form id="chat">
+        <input type="text" id="inputMessage" autocomplete="off" />
+        <button type="submit">Send</button>
+      </form>
+    </div>
     <script
       src="https://cdn.socket.io/4.7.5/socket.io.min.js"
       integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO"
       crossorigin="anonymous"
     ></script>
-    <script>
-      const API_URL = "http://localhost:3000";
-      const socket = io(API_URL);
-
-      const $ = (selector) => document.querySelector(selector);
-      const inputMessage = $("#inputMessage");
-      const chatForm = $("#chat");
-
-      chatForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const message = inputMessage.value;
-
-        if (message.trim !== "") {
-          socket.emit("chat", {
-            message,
-            user: "Test Client",
-          });
-        }
-      });
-
-      socket.on("chat", (message) => {
-        const messagesList = $("#messagesList");
-        const li = document.createElement("li");
-        li.textContent = `${message.user}: ${message.message}`;
-        messagesList.appendChild(li);
-        inputMessage.value = "";
-      });
-    </script>
+    <script type="module" src="./chat.js"></script>
   </body>
 </html>
