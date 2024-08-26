@@ -2,7 +2,7 @@
 
 
 ```bash
-npm install express socket.io nodemon
+npm install express socket.io nodemon cors mongodb
 
 ```
 

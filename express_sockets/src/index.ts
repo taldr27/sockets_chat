@@ -1,6 +1,7 @@
 import express from "express";
 import http from "http";
 import { Server } from "socket.io";
+import { testDbPromise } from "./mongo";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -11,8 +12,25 @@ const io = new Server(server, {
   },
 });
 
-app.get("/", (_req, res) => {
-  res.send("Hello World");
+app.get("/", async (_req, res) => {
+  return res.send("Hello World");
+});
+
+app.get("/messages/:room", async (req, res) => {
+  try {
+    const room = req.params.room;
+    const testDb = await testDbPromise;
+    const collection = testDb.collection("messages");
+    const messages = await collection
+      .find({
+        room: room,
+      })
+      .toArray();
+
+    return res.status(200).json(messages);
+  } catch (error) {
+    return res.status(500).json({ error: error });
+  }
 });
 
 io.on("connection", (socket) => {
